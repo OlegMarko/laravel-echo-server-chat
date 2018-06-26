@@ -11,9 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group([
+    'namespace' => 'Chat'
+], function () {
+    Route::get('/', 'ChatController@index');
+
+    Route::group([
+        'prefix' => 'chat'
+    ], function () {
+        Route::post('/send-message', 'ChatController@sendMessage');
+    });
 });
+
 
 Auth::routes();
 
