@@ -14,3 +14,12 @@
 //Broadcast::channel('App.User.{id}', function ($user, $id) {
 //    return (int) $user->id === (int) $id;
 //});
+
+Broadcast::channel('room.{room_id}', function ($user, $room_id) {
+
+    if ($user->rooms->contains($room_id)) {
+        return $user->name;
+    }
+
+    return false;
+});

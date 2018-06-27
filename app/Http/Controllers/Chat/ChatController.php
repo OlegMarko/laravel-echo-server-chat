@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Chat;
 
-use App\Events\Message;
+use App\Events\PrivateChat;
+use App\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,11 +19,31 @@ class ChatController extends Controller
         return view('chat.index');
     }
 
+    /**
+     * Send message.
+     *
+     * @param Request $request
+     */
     public function sendMessage(Request $request)
     {
         if ($request->get('body', null)) {
 
-            Message::dispatch($request->all());
+            PrivateChat::dispatch($request->all());
         }
+    }
+
+    /**
+     * Get room.
+     *
+     * @param Room $room
+     *
+     * @return bool
+     */
+    public function getRoom(Room $room)
+    {
+        return view('chat.room', [
+            'room' => $room,
+            'user' => auth()->user()
+        ]);
     }
 }

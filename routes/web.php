@@ -20,6 +20,7 @@ Route::group([
         'prefix' => 'chat'
     ], function () {
         Route::post('/send-message', 'ChatController@sendMessage');
+        Route::get('/room/{room}', 'ChatController@getRoom')->middleware('auth');
     });
 });
 
